@@ -5,8 +5,8 @@ import Done from "./done";
 class ToDoList extends Component {
   state = {
     inputValue: " ",
-    tasks: [{ id: "1", task: "1" }],
-    done: [{ id: "1", done: "2" }],
+    tasks: [{ id: "1", task: "Do Somethind" }],
+    done: [{ id: "1", done: "Done Something" }],
   };
 
   onChange = (event) => {
@@ -31,7 +31,7 @@ class ToDoList extends Component {
     const updatedTasks = this.state.tasks.filter((t) => t.id !== id);
 
     const newDone = {
-      id: this.state.done.length + 1,
+      id: Date.now(),
       done: doneTask.task,
     };
 
