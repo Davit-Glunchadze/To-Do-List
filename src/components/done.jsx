@@ -1,6 +1,7 @@
 import React from "react";
 
 const Done = ({ id, done, action, act }) => {
+  console.log('hello')
   return (
     <div>
       <h3>Task: {done}</h3>
@@ -12,4 +13,4 @@ const Done = ({ id, done, action, act }) => {
   );
 };
 
-export default Done;
+export default React.memo(Done);
