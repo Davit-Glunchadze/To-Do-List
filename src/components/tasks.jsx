@@ -1,120 +1,109 @@
-import { Component } from "react";
+import { useCallback, useState } from "react";
 import Task from "./task";
 import Done from "./done";
 
-import { useState } from "react";
+const ToDoList = () => {
+  const [inputValue, setInputValue] = useState("");
 
-class ToDoList extends Component {
-  state = {
-    inputValue: " ",
-    tasks: [{ id: "1", task: "Do Somethind" }],
-    done: [{ id: "1", done: "Done Something" }],
-  };
+  const [tasks, setTask] = useState([{ id: 1, task: "Do Somethind" }]);
 
-  onChange = (event) => {
-    const value = event.target.value;
-    this.setState({ inputValue: value });
-  };
+  const [done, setDone] = useState([{ id: 1, done: "Done Something" }]);
 
+  const onChange = (event) => setInputValue(event.target.value);
 
-  addTask = (event) => {
+  const addTask = (event) => {
     event.preventDefault();
     const newTask = {
-      id: this.state.tasks.length + 1,
-      task: this.state.inputValue,
-    };
-    this.setState({
-      tasks: [...this.state.tasks, newTask],
-      inputValue: "",
-    });
-  };
-
-  addDone = (id) => {
-    const doneTask = this.state.tasks.find((t) => t.id === id);
-    const updatedTasks = this.state.tasks.filter((t) => t.id !== id);
-
-    const newDone = {
-      id: Date.now(),
-      done: doneTask.task,
+      id: tasks.length + 1,
+      task: inputValue,
     };
 
-    this.setState({
-      tasks: updatedTasks,
-      done: [...this.state.done, newDone],
-    });
+    setTask((prev) => [...prev, newTask]);
+    setInputValue("");
   };
 
-  removeDone = (id) => {
-    const done = this.state.done.filter((d) => d.id !== id);
-    this.setState({
-      done,
+  // const addDone = useCallback(
+  //   (id) => {
+  //     const doneTask = tasks.find((t) => t.id === id);
+
+  //     const newDone = {
+  //       id: Date.now(),
+  //       done: doneTask.task,
+  //     };
+
+  //     setTask((prev) => prev.filter((t) => t.id !== id));
+  //     setDone((prev) => [...prev, newDone]);
+  //   }
+  // );
+
+  const addDone = useCallback((id) => {
+    setTask((prevTasks) => {
+      const doneTask = prevTasks.find((t) => t.id === id);
+      setDone((prevDone) => [
+        ...prevDone,
+        { id: Date.now(), done: doneTask.task },
+      ]);
+      return prevTasks.filter((t) => t.id !== id);
     });
-  };
+  }, []);
 
-  add = (id) => {
-    const addTask = this.state.done.find((n) => n.id === id);
-    const updated = this.state.done.filter((n) => n.id !== id);
+  const removeDone = useCallback((id) => {
+    setDone((prev) => prev.filter((d) => d.id !== id));
+  }, []);
 
-    const newTask = {
-      id: Date.now(),
-      task: addTask.done,
-    };
-
-    this.setState({
-      done: updated,
-      tasks: [...this.state.tasks, newTask],
+  const add = useCallback((id) => {
+    setDone((prevDone) => {
+      const addTask = prevDone.find((d) => d.id === id);
+      const updatedDone = prevDone.filter((d) => d.id !== id);
+      setTask((prevTasks) => [
+        ...prevTasks,
+        { id: Date.now(), task: addTask.done },
+      ]);
+      return updatedDone;
     });
-  };
+  }, []);
+  
 
-  render() {
-    return (
-      <div className="main">
-        <h1>To DO List</h1>
-        <div className="input">
-          <form onSubmit={this.addTask}>
-            <input
-              type="text"
-              placeholder="Enter your task"
-              onChange={this.onChange}
-              value={this.state.inputValue}
-            />
-            <button type="submit">Add Task</button>
-          </form>
-          <div className="list">
-            <div className="toBeDone">
-              <h2>To Be Done</h2>
-              <div className="addTask">
-                {this.state.tasks.map((t) => (
-                  <Task
-                    key={t.id}
-                    id={t.id}
-                    task={t.task}
-                    action={this.addDone}
-                  />
-                ))}
-              </div>
+  return (
+    <div className="main">
+      <h1>To DO List</h1>
+      <div className="input">
+        <form onSubmit={addTask}>
+          <input
+            type="text"
+            placeholder="Enter your task"
+            onChange={onChange}
+            value={inputValue}
+          />
+          <button type="submit">Add Task</button>
+        </form>
+        <div className="list">
+          <div className="toBeDone">
+            <h2>To Be Done</h2>
+            <div className="addTask">
+              {tasks.map((t) => (
+                <Task key={t.id} id={t.id} task={t.task} action={addDone} />
+              ))}
             </div>
-            <div className="done">
-              <h2>Done</h2>
-              <div className="doneTask">
-                {this.state.done.map((d) => (
-                  <Done
-                    key={d.id}
-                    id={d.id}
-                    done={d.done}
-                    action={this.removeDone}
-                    act={this.add}
-                  />
-                ))}
-              </div>
+          </div>
+          <div className="done">
+            <h2>Done</h2>
+            <div className="doneTask">
+              {done.map((d) => (
+                <Done
+                  key={d.id}
+                  id={d.id}
+                  done={d.done}
+                  action={removeDone}
+                  act={add}
+                />
+              ))}
             </div>
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default ToDoList;
-
-
