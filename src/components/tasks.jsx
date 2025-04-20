@@ -1,13 +1,13 @@
 import { Component } from "react";
 import Task from "./task";
 import Done from "./done";
-
 class ToDoList extends Component {
   state = {
     inputValue: " ",
     tasks: [{ id: "1", task: "Do Somethind" }],
     done: [{ id: "1", done: "Done Something" }],
   };
+  
 
   onChange = (event) => {
     const value = event.target.value;
