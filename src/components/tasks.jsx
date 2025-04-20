@@ -1,18 +1,21 @@
 import { Component } from "react";
 import Task from "./task";
 import Done from "./done";
+
+import { useState } from "react";
+
 class ToDoList extends Component {
   state = {
     inputValue: " ",
     tasks: [{ id: "1", task: "Do Somethind" }],
     done: [{ id: "1", done: "Done Something" }],
   };
-  
 
   onChange = (event) => {
     const value = event.target.value;
     this.setState({ inputValue: value });
   };
+
 
   addTask = (event) => {
     event.preventDefault();
@@ -53,7 +56,7 @@ class ToDoList extends Component {
     const updated = this.state.done.filter((n) => n.id !== id);
 
     const newTask = {
-      id: this.state.tasks.length + 1,
+      id: Date.now(),
       task: addTask.done,
     };
 
@@ -113,3 +116,5 @@ class ToDoList extends Component {
 }
 
 export default ToDoList;
+
+
