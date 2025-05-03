@@ -1,0 +1,60 @@
+.doneTitle {
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  white-space: nowrap;
+  text-align: left;
+  color: #080808;
+  text-shadow: 0 0 5px #000;
+  border: #fff solid 2px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid rgb(73, 143, 73);
+  border-left: 5px solid rgb(73, 143, 73);
+  margin-top: 10px;
+  max-width: 400px;
+  width: 100%;
+  background-color: #c9dbb3;
+}
+
+.buttons{
+  display: flex;
+  gap: 20px;
+}
+
+.done {
+  background-color: #ffffff;
+  color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  border: solid 2px #000;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  margin-top: 20px;
+}
+
+.done h2 {
+  font-size: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  white-space: nowrap;
+  text-align: center;
+  color: #181515;
+  text-shadow: 0 0 5px #000;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: solid 2px #eeecec;
+  padding-bottom: 10px;
+}
+
+.done h2{
+  border-bottom:solid 3px green;
+}
